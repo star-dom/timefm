@@ -93,7 +93,19 @@ margin-top: 10px;
 <a href="javascript:void(0);"><img src="/assets/img/unmute.png" style="float: left; width: 16px; display: none; filter: invert(100%);" id="mute" onclick="mute()"></a>
   
     <input type="range" id="polz1" min="0" max="100" value="100" style="border: none; accent-color: #ffffff;"><br><h2 style="font-family: osn; position: absolute; margin-top: -96px; margin-left: 10px; color: #ffffff;">Слухати online</h2></div></div><script>
-                      function play() {
+                     document.querySelector('#audio').addEventListener('error', function() {
+  console.log('Audio error:', this.error);
+  if (this.error.code === 4) { // Код ошибки 503
+    this.src = 'assets/audio/live-off.mp3';
+    this.loop = "";
+      document.querySelector('#audio').addEventListener('ended', function() {
+  // Перезапустить воспроизведение
+  document.querySelector('#audio').currentTime = 0;
+  document.querySelector('#audio').play();
+});
+  } 
+});
+	    function play() {
     document.querySelector('#audio ').play();
     document.querySelector('#play').style="display: none; filter: invert(100%);";
     document.querySelector('#pause').style="display: block; width: 48px; filter: invert(100%);";
