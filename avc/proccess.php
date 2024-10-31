@@ -1,21 +1,20 @@
 <?php
-// Проверяем, переданы ли параметры artist и title
 if (isset($_GET['artist']) && isset($_GET['title'])) {
-    // Получаем значения параметров
-    $artist = htmlspecialchars($_GET['artist']);
-    $title = htmlspecialchars($_GET['title']);
-    
-    // Здесь можно добавить обработку данных, если необходимо
+    // Получаем данные из URL
+    $artist = htmlspecialchars(trim($_GET['artist']));
+    $title = htmlspecialchars(trim($_GET['title']));
 
-    // Отправляем данные на index.html через AJAX (например, сохраняем в сессии)
+    // Обработка данных (например, можно соединить их в одну строку)
+    $message = "Исполнитель: $artist, Название: $title";
+
+    // Сохранение данных в сессию или передача через URL
     session_start();
-    $_SESSION['artist'] = $artist;
-    $_SESSION['title'] = $title;
+    $_SESSION['message'] = $message;
 
-    // Выводим сообщение "OK"
-    echo "OK";
+    // Перенаправление на index.html
+    header("Location: index.html");
+    exit();
 } else {
-    // Если параметры не переданы, выводим сообщение об ошибке
-    echo "Ошибка: параметры artist и title не переданы.";
+    echo "Данные не были переданы.";
 }
 ?>
