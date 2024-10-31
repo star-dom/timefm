@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+</head>
+<body>
+    <h1>Данные о песне</h1>
+    <div id="song-info">
+        <?php
+        session_start();
+        if (isset($_SESSION['artist']) && isset($_SESSION['title'])) {
+            echo "<p>Исполнитель: " . htmlspecialchars($_SESSION['artist']) . "</p>";
+            echo "<p>Название: " . htmlspecialchars($_SESSION['title']) . "</p>";
+        } else {
+            echo "<p>Данные не были переданы.</p>";
+        }
+        ?>
+    </div>
+
+    <script>
+        // Пример запроса к process.php с параметрами artist и title
+        const params = new URLSearchParams(window.location.search);
+        const artist = params.get('artist');
+        const title = params.get('title');
+
+        if (artist && title) {
+            fetch(process.php?artist=${encodeURIComponent(artist)}&title=${encodeURIComponent(title)})
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data); // Выводим "OK" в консоль
+                    // Здесь можно обновить интерфейс, если нужно
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+    </script>
+</body>
+</html>
